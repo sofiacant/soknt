@@ -1,1 +1,52 @@
+Un sistema de gestión de correos electrónicos desea manejar los correos recibidos por
+cada cliente. De cada cliente conoce su código (1..1000), dirección de email y todos los
+mensajes de correo que ha recibido. De cada mensaje conoce la dirección del emisor, la
+fecha de envío, el asunto, el texto y si ya fue leído.
+Realizar un programa que invoque a módulos para:
+- Leer y almacenar los correos electrónicos en una estructura de datos eficiente
+para la búsqueda por código de cliente. La lectura finaliza al ingresar el cliente 0.
+De cada correo se lee el id del cliente, su dirección de correo y toda la información
+del mensaje. La información debe quedar agrupada por cliente.
+- Leer un código de cliente e informar la cantidad de correos sin leer
+- Leer una dirección de correo e informar la cantidad de correos enviados desde
+dicha dirección
+program arboles2;
+const
+  maxCod=1000;
+type
+  rango_cod = 1..maxCod;
+  mensaje= record
+    emisor: string; 
+    texto:string;
+    asunto: string;
+    fecha: string;
+    leido: boolean;
+  end;
+  cliente=record
+    cod: rango_cod;
+    email: string;
+  end;
+  mensajeLeido = record
+    msj :mensaje;
+    cli: cliente;
+  end;
 
+  lista=^nodo;
+  nodo=record
+    dato:mensaje;
+    sig:lista;
+  end;
+
+  datoCliente= record
+    cli:cliente;
+    mensaje:lista;
+  end;
+
+  arbol= ^nodo;
+  nodo=record
+    dato:datoCliente;
+    hd:arbol;
+    hi:arbol;
+  end; 
+
+ 
