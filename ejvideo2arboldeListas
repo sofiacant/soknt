@@ -10,6 +10,7 @@ del mensaje. La información debe quedar agrupada por cliente.
 - Leer un código de cliente e informar la cantidad de correos sin leer
 - Leer una dirección de correo e informar la cantidad de correos enviados desde
 dicha dirección
+
 program arboles2;
 const
   maxCod=1000;
@@ -48,5 +49,73 @@ type
     hd:arbol;
     hi:arbol;
   end; 
+  procedure leerMensaje (varm mensajeLeido);
+  var
+    i: integer;
+  begin
+    readln(m.cli.cod);
+    readln(m.cli.email);
+    readln(m.msj.emisor);
+    readln(m.msj.texto);
+    readln(m.msj.asunto);
+    readln(m.msj.fecha);
+    readln(i);
+    writeln('ingrese 1 para indicar que fue leido, o cualquier otro valor en caso contrario');
+    m.msj.leido := (i = 1);
+end;
+procedure agregar (Var a : arbol; m :mensajeLeido);
+var
+  aux : arbol;
+begin
+  if (a = nil) then begin
+    new(aux);
+    aux^.dato.cli := m.cli;
+    aux^.dato.mensajes := nil;
+    agregarAdelante (aux^.dato.mensajes, m.msj);
+    aux^.hi := nil;
+    aux^.hd:= nil;
+    a := aux;
+  end
+  else begin
+    if (a^.dato.cod = m.cli.cod) then
+      agregarAdelante(a^.dato.mensajes, m.msj)
+    else
+      if (a^.dato.cod > m.cli.cod) then
+        agregar(a^.hi,m)
+      else agregar(a^.hd,m):
+  end;
+end;
+
+function contarSinLeer(l:lista):integer;
+
+function cantidadDeCorreosSinLeer (cod rango_cod; a arbol): integer;
+var
+  retorno: integer;
+begin
+  if (a= nil) then
+    retorno := -1
+  else begin
+    if (a^.dato.cli.cod = cod) then
+      retorno:= contarSinLeer(a^.dato.mensajes);
+    else if (a^.dato.cod > cod) then
+       retorno:= cantidadDeCorreos SinLeer (cod, a^.hi)
+        else
+          retorno: cantidadDeCorreos SinLeer(cod, a^.hd);
+  end;
+  cantidadDeCorreos SinLeer := retorno;
+end;
+
+function contarSinDesdeDir(l:lista ;dir: string);//
+
+
+function contarCorreosDesdeDireccion(a : arbol; dir : string): integer;
+begin
+  if (a = nil) then
+    contarCorreosDesdeDireccion := 0
+  else
+    contarCorreosDesdeDireccion := contarSinDesdeDir(a^.dato.mensajes,dir) +
+    contarCorreosDesdeDireccion(a^.hi,dir) +
+    contarCorreosDesdeDireccion(a^.hd,dir);
+end;
 
  
